@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jorbert L. Intendencia | Graphic Designer & Illustrator</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --bg: #0b132b;
+      --bg-secondary: #111d3f;
+      --text: #e8ecf1;
+      --text-secondary: #b0bdd4;
+      --accent: #5390d9;
+      --highlight: #6fffe9;
+      --glass-bg: rgba(255, 255, 255, 0.04);
+      --glass-bg-light: rgba(255, 255, 255, 0.07);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-border-hover: rgba(111, 255, 233, 0.4);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.45);
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --nav-bg: rgba(11, 19, 43, 0.75);
+      --toggle-bg: #1a2d52;
+      --toggle-dot: #6fffe9;
+      --sparkle-color: #6fffe9;
+      --modal-bg: rgba(11, 19, 43, 0.95);
+    }
+
+    .light-mode {
+      --bg: #f0f4f8;
+      --bg-secondary: #e2e8f0;
+      --text: #1a202c;
+      --text-secondary: #4a5568;
+      --glass-bg: rgba(255, 255, 255, 0.5);
+      --glass-bg-light: rgba(255, 255, 255, 0.6);
+      --glass-border: rgba(0, 0, 0, 0.1);
+      --glass-border-hover: rgba(83, 144, 217, 0.5);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.15);
+      --card-bg: rgba(255, 255, 255, 0.55);
+      --nav-bg: rgba(240, 244, 248, 0.8);
+      --toggle-bg: #cbd5e0;
+      --toggle-dot: #5390d9;
+      --sparkle-color: #4078df;
+      --modal-bg: rgba(240, 244, 248, 0.96);
+      --highlight: #5390d9;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      transition: background 0.5s ease, color 0.5s ease;
+      position: relative;
+      min-height: 100vh;
+      cursor: default;
+    }
+
+    /* FLOATING CIRCLES BACKGROUND */
+    .bg-circles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.08;
+      animation: floatCircle var(--dur) ease-in-out infinite;
+      animation-delay: var(--delay);
+    }
+
+    .bg-circle.c1 { width: 300px; height: 300px; background: #6fffe9; top: 10%; left: 5%; --dur: 14s; --delay: 0s; }
+    .bg-circle.c2 { width: 200px; height: 200px; background: #5390d9; top: 60%; left: 75%; --dur: 18s; --delay: -5s; }
+    .bg-circle.c3 { width: 350px; height: 350px; background: #6fffe9; top: 40%; left: 40%; --dur: 20s; --delay: -10s; }
+    .bg-circle.c4 { width: 180px; height: 180px; background: #5390d9; top: 75%; left: 15%; --dur: 16s; --delay: -3s; }
+    .bg-circle.c5 { width: 250px; height: 250px; background: #6fffe9; top: 15%; left: 60%; --dur: 22s; --delay: -7s; }
+    .bg-circle.c6 { width: 150px; height: 150px; background: #5390d9; top: 50%; left: 20%; --dur: 12s; --delay: -12s; }
+
+    @keyframes floatCircle {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(40px, -30px) scale(1.08); }
+      50% { transform: translate(-25px, -55px) scale(0.94); }
+      75% { transform: translate(-35px, 20px) scale(1.05); }
+    }
+
+    /* SPARKLE PARTICLES */
+    .sparkle-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      border-radius: 50%;
+      background: var(--sparkle-color);
+      box-shadow: 0 0 6px 2px var(--sparkle-color), 0 0 16px 4px rgba(111, 255, 233, 0.5);
+      animation: sparkleBurst 0.75s ease-out forwards;
+      opacity: 1;
+    }
+
+    @keyframes sparkleBurst {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.9; }
+      30% { transform: translate(var(--sx), var(--sy)) scale(1.6); opacity: 0.7; }
+      100% { transform: translate(var(--ex), var(--ey)) scale(0); opacity: 0; }
+    }
+
+    /* NAVIGATION */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      z-index: 1000;
+      padding: 0.9rem 2rem;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      transition: all 0.4s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 1.5rem; font-weight: 800; color: var(--highlight); text-decoration: none;
+      letter-spacing: -0.5px; transition: color 0.3s;
+    }
+    .nav-logo:hover { color: var(--accent); }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 1.8rem; list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none; color: var(--text-secondary); font-weight: 500;
+      font-size: 0.95rem; transition: all 0.3s ease; position: relative; padding: 0.3rem 0;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px;
+      background: var(--highlight); border-radius: 2px; transition: width 0.35s ease;
+    }
+    .nav-links a:hover { color: var(--highlight); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .theme-toggle {
+      width: 48px; height: 26px; border-radius: 30px; background: var(--toggle-bg);
+      border: 2px solid var(--glass-border); cursor: pointer; position: relative;
+      transition: all 0.4s ease; flex-shrink: 0;
+    }
+    .theme-toggle::after {
+      content: ''; position: absolute; top: 3px; left: 4px; width: 16px; height: 16px;
+      border-radius: 50%; background: var(--toggle-dot);
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      box-shadow: 0 0 8px rgba(111, 255, 233, 0.5);
+    }
+    .light-mode .theme-toggle::after {
+      left: 24px; box-shadow: 0 0 8px rgba(83, 144, 217, 0.5);
+    }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1001;
+      background: none; border: none; padding: 5px;
+    }
+    .hamburger span {
+      width: 26px; height: 2.5px; background: var(--text); border-radius: 3px;
+      transition: all 0.35s ease;
+    }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* SECTIONS COMMON */
+    .section {
+      position: relative; z-index: 1; padding: 6rem 2rem; max-width: 1200px; margin: 0 auto;
+    }
+    .section-label {
+      display: inline-block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px;
+      color: var(--highlight); margin-bottom: 0.5rem; font-weight: 600; opacity: 0;
+      animation: fadeSlideUp 0.7s ease forwards;
+    }
+    .section h2 {
+      font-size: 2.5rem; font-weight: 800; margin-bottom: 2.5rem; position: relative;
+      display: inline-block; opacity: 0; animation: fadeSlideUp 0.7s ease forwards 0.1s;
+    }
+    .section h2::after {
+      content: ''; position: absolute; bottom: -8px; left: 0; width: 60px; height: 3px;
+      background: var(--highlight); border-radius: 3px; animation: underlineLoop 3s ease-in-out infinite;
+    }
+    @keyframes underlineLoop {
+      0%, 100% { width: 60px; opacity: 0.8; }
+      50% { width: 100%; opacity: 1; }
+    }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .reveal.visible {
+      opacity: 1; transform: translateY(0);
+    }
+
+    /* HOME SECTION */
+    #home {
+      min-height: 100vh; display: flex; align-items: center; padding-top: 5rem;
+    }
+    .home-container {
+      display: flex; align-items: center; justify-content: space-between; gap: 3rem;
+      width: 100%; flex-wrap: wrap;
+    }
+    .home-content { flex: 1 1 400px; z-index: 2; }
+    .home-greeting {
+      display: inline-flex; align-items: center; gap: 0.5rem; font-size: 1.1rem;
+      color: var(--text-secondary); margin-bottom: 0.5rem; opacity: 0;
+      animation: fadeSlideUp 0.7s ease forwards;
+    }
+    .hand-wave {
+      display: inline-block; font-size: 2rem; animation: waveHand 3.2s ease-in-out infinite;
+      transform-origin: 100% 100%;
+    }
+    @keyframes waveHand {
+      0% { transform: rotate(0deg); }
+      5.625% { transform: rotate(14deg); }
+      11.25% { transform: rotate(-10deg); }
+      16.875% { transform: rotate(10deg); }
+      22.5% { transform: rotate(-8deg); }
+      28.125% { transform: rotate(4deg); }
+      33.75% { transform: rotate(-2deg); }
+      40.5%, 100% { transform: rotate(0deg); }
+    }
+
+    .home-im {
+      font-size: 1.8rem; font-weight: 300; color: var(--text-secondary);
+      margin-bottom: -0.5rem; opacity: 0; animation: fadeSlideUp 0.7s ease forwards 0.1s;
+      letter-spacing: 0.5px;
+    }
+
+    .home-name {
+      font-size: 3.8rem; font-weight: 900; line-height: 1.15; margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--highlight) 0%, var(--accent) 40%, #fff 60%, var(--highlight) 100%);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmerName 4s ease-in-out infinite, fadeSlideUp 0.7s ease forwards 0.15s;
+      opacity: 0;
+    }
+    @keyframes shimmerName {
+      0%, 100% { background-position: 0% 50%; }
+      25% { background-position: 100% 0%; }
+      50% { background-position: 100% 100%; }
+      75% { background-position: 0% 100%; }
+    }
+
+    .home-title {
+      font-size: 1.3rem; color: var(--text-secondary); margin-bottom: 1.5rem;
+      font-weight: 400; opacity: 0; animation: fadeSlideUp 0.7s ease forwards 0.3s;
+    }
+    .home-title span { color: var(--highlight); font-weight: 600; }
+
+    .home-buttons {
+      display: flex; gap: 1rem; flex-wrap: wrap; opacity: 0;
+      animation: fadeSlideUp 0.7s ease forwards 0.45s; margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.8rem; border-radius: 50px; font-weight: 600; font-size: 0.95rem;
+      text-decoration: none; cursor: pointer; transition: all 0.35s ease;
+      border: 2px solid transparent; display: inline-flex; align-items: center; gap: 0.5rem;
+      position: relative; overflow: hidden;
+    }
+    .btn-primary {
+      background: var(--highlight); color: #0b132b; border-color: var(--highlight);
+      box-shadow: 0 6px 24px rgba(111, 255, 233, 0.3);
+    }
+    .btn-primary:hover {
+      background: transparent; color: var(--highlight);
+      box-shadow: 0 10px 35px rgba(111, 255, 233, 0.45); transform: translateY(-3px);
+    }
+    .btn-outline {
+      background: transparent; color: var(--highlight); border-color: var(--highlight);
+    }
+    .btn-outline:hover {
+      background: var(--highlight); color: #0b132b;
+      box-shadow: 0 10px 35px rgba(111, 255, 233, 0.4); transform: translateY(-3px);
+    }
+
+    .social-icons-row {
+      display: flex; gap: 1rem; margin-top: 0.5rem; opacity: 0;
+      animation: fadeSlideUp 0.7s ease forwards 0.55s;
+    }
+    .social-icon {
+      width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; background: var(--glass-bg); border: 1px solid var(--glass-border);
+      color: var(--text); text-decoration: none; font-size: 1.1rem;
+      transition: all 0.35s ease; position: relative; overflow: hidden;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+    .social-icon:hover {
+      background: var(--accent); color: #fff; border-color: var(--accent);
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 12px 30px rgba(83, 144, 217, 0.4);
+    }
+    .social-icon.fb:hover { background: #1877f2; border-color: #1877f2; }
+    .social-icon.discord:hover { background: #5865f2; border-color: #5865f2; }
+    .social-icon.insta:hover { background: #e4405f; border-color: #e4405f; }
+    .social-icon.gmail:hover { background: #ea4335; border-color: #ea4335; }
+
+    .home-image-wrapper {
+      flex: 0 0 380px; position: relative; z-index: 2; opacity: 0;
+      animation: fadeSlideUp 0.7s ease forwards 0.35s;
+    }
+    .home-image-container {
+      position: relative; width: 100%; aspect-ratio: 3/4; border-radius: 30px; overflow: hidden;
+      border: 3px solid var(--glass-border); box-shadow: var(--shadow-lg);
+      background: var(--glass-bg);
+      transition: all 0.5s ease; 
+      animation: floatImage 5s ease-in-out infinite;
+    }
+    @keyframes floatImage {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-18px); }
+    }
+    .home-image-container:hover {
+      border-color: var(--highlight); box-shadow: 0 25px 60px rgba(111, 255, 233, 0.25);
+      transform: translateY(-10px); animation: none;
+    }
+    .home-image-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .home-image-glow {
+      position: absolute; inset: -20px; border-radius: 40px;
+      background: radial-gradient(ellipse at center, rgba(111, 255, 233, 0.2) 0%, transparent 70%);
+      z-index: -1; animation: glowPulse 3s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.06); }
+    }
+
+    /* ABOUT SECTION */
+    #about { padding-top: 5rem; }
+    .about-container { display: flex; align-items: center; gap: 3rem; flex-wrap: wrap; }
+    .about-image-wrap { flex: 0 0 320px; position: relative; }
+    .about-image-frame {
+      width: 100%; aspect-ratio: 1/1; border-radius: 24px; overflow: hidden;
+      border: 3px solid var(--glass-border); box-shadow: var(--shadow);
+      background: var(--glass-bg); transition: all 0.5s ease;
+      animation: morphShape 6s ease-in-out infinite;
+    }
+    @keyframes morphShape {
+      0%, 100% { border-radius: 24px; }
+      25% { border-radius: 40% 30% 35% 28%; }
+      50% { border-radius: 28% 38% 30% 36%; }
+      75% { border-radius: 34% 26% 38% 30%; }
+    }
+    .about-image-frame img { width: 100%; height: 100%; object-fit: cover; }
+    .about-image-frame:hover {
+      border-color: var(--highlight); box-shadow: var(--shadow-lg);
+      animation: none; border-radius: 20px;
+    }
+    .about-content { flex: 1 1 350px; }
+    .about-content p {
+      line-height: 1.8; color: var(--text-secondary); margin-bottom: 1.2rem; font-size: 1rem;
+    }
+    .about-highlights { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+    .about-highlight-item {
+      display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 1.2rem;
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: 50px; font-size: 0.9rem; color: var(--text);
+      transition: all 0.35s ease;backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+    .about-highlight-item:hover {
+      border-color: var(--highlight); transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(111, 255, 233, 0.15);
+    }
+    .about-highlight-item i { color: var(--highlight); }
+
+    /* EDUCATION SECTION */
+    #education { padding-top: 5rem; }
+    .timeline { position: relative; max-width: 800px; margin: 0 auto; }
+    .timeline::before {
+      content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 3px;
+      background: linear-gradient(180deg, var(--highlight), var(--accent), var(--highlight));
+      border-radius: 3px; transform: translateX(-50%);
+    }
+    .timeline-item {
+      position: relative; margin-bottom: 3rem; width: 100%; display: flex;
+      justify-content: center; opacity: 0; transform: translateY(50px);
+      transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .timeline-item.visible { opacity: 1; transform: translateY(0); }
+    .timeline-item:nth-child(odd) .timeline-card { margin-right: auto; margin-left: 0; text-align: right; }
+    .timeline-item:nth-child(even) .timeline-card { margin-left: auto; margin-right: 0; text-align: left; }
+    .timeline-card {
+      width: 42%; background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: 20px; padding: 1.8rem;
+      backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+      box-shadow: var(--shadow); transition: all 0.4s ease; position: relative;
+    }
+    .timeline-card:hover {
+      transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: var(--accent);
+    }
+    .timeline-dot {
+      position: absolute; left: 50%; top: 30px; transform: translateX(-50%);
+      width: 18px; height: 18px; border-radius: 50%; background: var(--highlight);
+      border: 4px solid var(--bg); box-shadow: 0 0 20px rgba(111, 255, 233, 0.6);
+      z-index: 2; animation: dotPulse 3s ease-in-out infinite;
+    }
+    @keyframes dotPulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(111, 255, 233, 0.6); }
+      50% { box-shadow: 0 0 40px rgba(111, 255, 233, 1), 0 0 60px rgba(83, 144, 217, 0.5); }
+    }
+    .timeline-card h4 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+    .timeline-card .institution { color: var(--highlight); font-weight: 500; font-size: 0.9rem; margin-bottom: 0.3rem; }
+    .timeline-card .year { color: var(--text-secondary); font-size: 0.85rem; font-weight: 400; }
+
+    /* SKILLS SECTION */
+    #skills { padding-top: 5rem; }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+    .skills-category {
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: 20px; padding: 2rem;
+      backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+      box-shadow: var(--shadow); transition: all 0.4s ease;
+      opacity: 0; transform: translateY(40px);
+    }
+    .skills-category.visible { opacity: 1; transform: translateY(0); }
+    .skills-category:hover {
+      box-shadow: var(--shadow-lg); border-color: var(--highlight); transform: translateY(-5px);
+    }
+    .skills-category h3 {
+      font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--highlight);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+    .skill-tag {
+      padding: 0.55rem 1.2rem; border-radius: 50px; font-size: 0.85rem; font-weight: 500;
+      background: var(--glass-bg-light); border: 1px solid var(--glass-border);
+      color: var(--text); transition: all 0.35s ease; cursor: default;
+      animation: tagFloat 4s ease-in-out infinite;
+    }
+    .skill-tag:nth-child(1) { animation-delay: 0s; }
+    .skill-tag:nth-child(2) { animation-delay: 0.2s; }
+    .skill-tag:nth-child(3) { animation-delay: 0.4s; }
+    .skill-tag:nth-child(4) { animation-delay: 0.6s; }
+    .skill-tag:nth-child(5) { animation-delay: 0.8s; }
+    .skill-tag:nth-child(6) { animation-delay: 1s; }
+    .skill-tag:nth-child(7) { animation-delay: 1.2s; }
+    @keyframes tagFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .skill-tag:hover {
+      background: var(--accent); color: #fff; border-color: var(--accent);
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 8px 22px rgba(83, 144, 217, 0.35); animation: none;
+    }
+
+    /* MY WORK SECTION */
+    #work { padding-top: 5rem; }
+    .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+    .work-card {
+      aspect-ratio: 4/3; border-radius: 18px; overflow: hidden; cursor: pointer;
+      position: relative; border: 2px solid var(--glass-border);
+      background: var(--glass-bg); transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      opacity: 0; transform: translateY(40px) scale(0.95);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+    .work-card.visible { opacity: 1; transform: translateY(0) scale(1); }
+    .work-card:hover {
+      transform: translateY(-10px) scale(1.03); border-color: var(--highlight);
+      box-shadow: 0 20px 45px rgba(111, 255, 233, 0.3); z-index: 5;
+    }
+    .work-card img, .work-card video {
+      width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;
+    }
+    .work-card:hover img, .work-card:hover video { transform: scale(1.08); }
+    .work-card .play-overlay {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      background: rgba(0, 0, 0, 0.35); transition: all 0.35s ease; pointer-events: none;
+    }
+    .work-card .play-overlay i {
+      font-size: 3rem; color: #fff; text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      transition: transform 0.35s ease;
+    }
+    .work-card:hover .play-overlay i { transform: scale(1.2); }
+
+    /* LIGHTBOX MODAL */
+    .lightbox-overlay {
+      position: fixed; inset: 0; background: var(--modal-bg); z-index: 10000;
+      display: flex; align-items: center; justify-content: center; opacity: 0;
+      pointer-events: none; transition: opacity 0.35s ease;
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    }
+    .lightbox-overlay.active { opacity: 1; pointer-events: all; }
+    .lightbox-content {
+      max-width: 90vw; max-height: 85vh; border-radius: 16px; overflow: hidden;
+      position: relative; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+      animation: lightboxIn 0.4s ease;
+    }
+    @keyframes lightboxIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .lightbox-content img, .lightbox-content video {
+      max-width: 90vw; max-height: 85vh; border-radius: 16px; display: block;
+    }
+    .lightbox-close {
+      position: absolute; top: 15px; right: 20px; width: 40px; height: 40px;
+      border-radius: 50%; background: rgba(0, 0, 0, 0.6); color: #fff; border: none;
+      cursor: pointer; font-size: 1.3rem; display: flex; align-items: center;
+      justify-content: center; z-index: 5; transition: all 0.3s ease;
+    }
+    .lightbox-close:hover { background: #e4405f; transform: rotate(90deg); }
+
+    /* CONTACT SECTION */
+    #contact { padding-top: 5rem; padding-bottom: 5rem; }
+    .contact-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; }
+    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-info-item {
+      display: flex; align-items: center; gap: 1rem; padding: 1.2rem 1.5rem;
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      transition: all 0.35s ease; text-decoration: none; color: var(--text);
+    }
+    .contact-info-item:hover {
+      border-color: var(--highlight); transform: translateX(6px); box-shadow: var(--shadow);
+    }
+    .contact-info-item i { font-size: 1.4rem; color: var(--highlight); flex-shrink: 0; width: 40px; text-align: center; }
+    .contact-info-item span { font-size: 0.95rem; color: var(--text-secondary); }
+    .contact-form {
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: 20px; padding: 2rem;
+      backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .contact-form input, .contact-form textarea {
+      width: 100%; padding: 0.9rem 1.2rem; border-radius: 12px;
+      border: 1px solid var(--glass-border); background: var(--glass-bg-light);
+      color: var(--text); font-size: 0.95rem; font-family: inherit;
+      resize: vertical; transition: all 0.35s ease; outline: none;
+    }
+    .contact-form input:focus, .contact-form textarea:focus {
+      border-color: var(--highlight); box-shadow: 0 0 20px rgba(111, 255, 233, 0.2);
+      background: var(--glass-bg);
+    }
+    .contact-form textarea { min-height: 130px; }
+    .contact-form button { align-self: flex-start; }
+    .download-resume-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.8rem 1.6rem; background: var(--accent); color: #fff;
+      border-radius: 50px; text-decoration: none; font-weight: 600;
+      font-size: 0.95rem; transition: all 0.35s ease;
+      border: 2px solid var(--accent); cursor: pointer; margin-top: 0.5rem;
+    }
+    .download-resume-btn:hover {
+      background: transparent; color: var(--accent);
+      box-shadow: 0 10px 30px rgba(83, 144, 217, 0.35); transform: translateY(-3px);
+    }
+    .form-success {
+      color: var(--highlight); font-weight: 600; text-align: center; padding: 1rem;
+      display: none;
+    }
+    .form-success.show { display: block; animation: fadeSlideUp 0.5s ease; }
+
+    /* FOOTER */
+    .footer {
+      text-align: center; padding: 2rem; color: var(--text-secondary);
+      font-size: 0.85rem; border-top: 1px solid var(--glass-border);
+      position: relative; z-index: 1;
+    }
+    .footer i { color: #e4405f; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .home-name { font-size: 2.8rem; }
+      .home-image-wrapper { flex: 0 0 280px; }
+      .timeline::before { left: 25px; }
+      .timeline-dot { left: 25px; }
+      .timeline-item:nth-child(odd) .timeline-card,
+      .timeline-item:nth-child(even) .timeline-card { width: 75%; margin-left: 60px; margin-right: 0; text-align: left; }
+      .about-image-wrap { flex: 0 0 250px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed; top: 0; right: -100%; width: 70%; max-width: 320px; height: 100vh;
+        flex-direction: column; background: var(--nav-bg);
+        backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+        padding: 6rem 2rem 2rem; gap: 1.5rem; transition: right 0.4s ease;
+        border-left: 1px solid var(--glass-border); z-index: 999;
+      }
+      .nav-links.active { right: 0; }
+      .hamburger { display: flex; }
+      .home-container { flex-direction: column-reverse; text-align: center; }
+      .home-content { text-align: center; }
+      .home-buttons, .social-icons-row { justify-content: center; }
+      .home-name { font-size: 2.4rem; }
+      .home-image-wrapper { flex: 0 0 220px; max-width: 260px; margin: 0 auto; }
+      .section h2 { font-size: 2rem; }
+      .about-container { flex-direction: column; text-align: center; }
+      .about-image-wrap { flex: 0 0 220px; max-width: 260px; margin: 0 auto; }
+      .about-highlights { justify-content: center; }
+      .timeline::before { left: 18px; }
+      .timeline-dot { left: 18px; width: 14px; height: 14px; }
+      .timeline-item:nth-child(odd) .timeline-card,
+      .timeline-item:nth-child(even) .timeline-card { width: 82%; margin-left: 50px; }
+      .timeline-card { padding: 1.2rem; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .work-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+    }
+
+    @media (max-width: 480px) {
+      .home-name { font-size: 1.9rem; }
+      .home-title { font-size: 1rem; }
+      .section { padding: 4rem 1rem; }
+      .btn { padding: 0.6rem 1.3rem; font-size: 0.85rem; }
+      .contact-container { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FLOATING CIRCLES BACKGROUND -->
+  <div class="bg-circles">
+    <div class="bg-circle c1"></div>
+    <div class="bg-circle c2"></div>
+    <div class="bg-circle c3"></div>
+    <div class="bg-circle c4"></div>
+    <div class="bg-circle c5"></div>
+    <div class="bg-circle c6"></div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <nav class="navbar" id="navbar">
+    <a href="#home" class="nav-logo">JLI</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" onclick="closeMenu()">Home</a></li>
+      <li><a href="#about" onclick="closeMenu()">About</a></li>
+      <li><a href="#education" onclick="closeMenu()">Education</a></li>
+      <li><a href="#skills" onclick="closeMenu()">Skills</a></li>
+      <li><a href="#work" onclick="closeMenu()">My Work</a></li>
+      <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+      <li>
+        <div class="theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode"></div>
+      </li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HOME SECTION -->
+  <section class="section" id="home">
+    <div class="home-container">
+      <div class="home-content">
+        <div class="home-greeting">
+          Hello there! <span class="hand-wave"><i class="fas fa-hand"></i></span>
+        </div>
+        <h1 class="home-name">Jorbert L. Intendencia</h1>
+        <p class="home-title">I'm passionate in <span>Graphic Designer</span> &amp; <span>Illustrator</span> crafting visually compelling stories through design.</p>
+        <div class="home-buttons">
+          <a href="#contact" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Hire Me</a>
+          <a href="#work" class="btn btn-outline"><i class="fas fa-eye"></i> View Work</a>
+        </div>
+        <div class="social-icons-row">
+          <a href="https://www.facebook.com/jorbert.intendencia" target="_blank" rel="noopener" class="social-icon fb" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://discord.com/channels/@me" target="_blank" rel="noopener" class="social-icon discord" title="Discord"><i class="fab fa-discord"></i></a>
+          <a href="https://www.instagram.com/jorbertintendencia/" target="_blank" rel="noopener" class="social-icon insta" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://myaccount.google.com/?hl=en&utm_source=OGB&utm_medium=act&gar=WzI4MV0" class="social-icon gmail" title="Gmail"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="home-image-wrapper">
+        <div class="home-image-glow"></div>
+        <div class="home-image-container">
+          <img src="me1.png" alt="Jorbert L. Intendencia - Portrait" loading="eager">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section class="section" id="about">
+    <span class="section-label reveal">Discover</span>
+    <h2 class="reveal">About Me</h2>
+    <div class="about-container">
+      <div class="about-image-wrap reveal">
+        <div class="about-image-frame">
+          <img src="me2.jpg" alt="About Jorbert" loading="lazy">
+        </div>
+      </div>
+      <div class="about-content reveal">
+        <p>
+          Hey there! I'm <strong>Jorbert L. Intendencia</strong>, I am a passionate artist who enjoys expressing creativity through drawing and painting. 
+          As an introverted person, I find inspiration in observing the world around me and turning ideas into meaningful artwork. 
+          I am always willing to learn new things and continuously improve my skills, both personally and professionally..
+        </p>
+        <p>
+          When it comes to work, I am hardworking, dedicated, and committed to giving my best in every task. 
+          I enjoy challenges because they help me grow and develop new abilities. 
+          In my free time, I love watching anime, which inspires my imagination and creativity.
+        </p>
+        <p>
+            I believe that learning never stops, and I am always open to new experiences, opportunities, 
+            and knowledge that can help me become a better artist and individual.
+        </p>
+        <div class="about-highlights">
+          <div class="about-highlight-item"><i class="fas fa-paint-brush"></i> Graphic Design</div>
+          <div class="about-highlight-item"><i class="fas fa-pencil-ruler"></i> Illustration</div>
+          <div class="about-highlight-item"><i class="fas fa-laptop-code"></i> UI/UX Design</div>
+          <div class="about-highlight-item"><i class="fas fa-video"></i> Video Editing</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION SECTION -->
+  <section class="section" id="education">
+    <span class="section-label reveal">My Journey</span>
+    <h2 class="reveal">Education</h2>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <h4>Bachelor of Science in Information Technology</h4>
+          <p class="institution">Davao del Norte State College</p>
+          <p class="year">2022 – Present</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <h4>Senior High School – Arts and Design</h4>
+          <p class="institution">Panabo City National High School</p>
+          <p class="year">2020 – 2022</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <h4>Junior High School</h4>
+          <p class="institution">Panabo City National High School</p>
+          <p class="year">2016 – 2020</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <h4>Elementary</h4>
+          <p class="institution">G.L. Dondoy Central Elementary School</p>
+          <p class="year">2010 – 2016</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS SECTION -->
+  <section class="section" id="skills">
+    <span class="section-label reveal">What I Do</span>
+    <h2 class="reveal">Skills &amp; Tools</h2>
+    <div class="skills-grid">
+      <div class="skills-category reveal">
+        <h3><i class="fas fa-star"></i> Creative Skills</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Graphic Design</span>
+          <span class="skill-tag">Illustration</span>
+          <span class="skill-tag">Logo Design</span>
+          <span class="skill-tag">UI/UX Design</span>
+          <span class="skill-tag">Video Editing</span>
+          <span class="skill-tag">Animation</span>
+        </div>
+      </div>
+      <div class="skills-category reveal">
+        <h3><i class="fas fa-tools"></i> Technologies I Use</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">IbispaintX</span>
+          <span class="skill-tag">Photoshop</span>
+          <span class="skill-tag">Canva</span>
+          <span class="skill-tag">VScode</span>
+          <span class="skill-tag">Figma</span>
+          <span class="skill-tag">Capcut</span>
+          <span class="skill-tag">Flip a Clip</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MY WORK SECTION -->
+  <section class="section" id="work">
+    <span class="section-label reveal">Portfolio</span>
+    <h2 class="reveal">My Work</h2>
+    <div class="work-grid">
+      <div class="work-card reveal" data-type="image" data-src="illu.jpg">
+        <img src="illu.jpg" alt="Work Sample" loading="lazy">
+      </div>
+      <div class="work-card reveal" data-type="image" data-src="PSITS1.jpg">
+        <img src="PSITS1.jpg" alt="Work Sample" loading="lazy">
+      </div>
+      <div class="work-card reveal" data-type="image" data-src="PSITS2.jpg">
+        <img src="PSITS2.jpg" alt="Work Sample" loading="lazy">
+      </div>
+      <div class="work-card reveal" data-type="image" data-src="logo1.jpg">
+        <img src="logo1.jpg" alt="Work Sample" loading="lazy">
+      </div>
+      <div class="work-card reveal" data-type="image" data-src="logo3.jpg">
+        <img src="logo3.jpg" alt="Work Sample" loading="lazy">
+      </div>
+      <div class="work-card reveal" data-type="image" data-src="Logo4.png">
+        <img src="Logo4.png" alt="Work Sample" loading="lazy">
+      </div>
+      <div class="work-card reveal" data-type="image" data-src="logo5.png">
+        <img src="logo5.png" alt="Work Sample" loading="lazy">
+      </div>
+      <div class="work-card reveal" data-type="image" data-src="poster.png">
+        <img src="poster.png" alt="Work Sample" loading="lazy">
+      </div>
+      <div class="work-card reveal" data-type="image" data-src="DA.jpg">
+        <img src="DA.jpg" alt="Work Sample" loading="lazy">
+      </div>
+      <div class="work-card reveal" data-type="image" data-src="DA1.jpg">
+        <img src="DA1.jpg" alt="Work Sample" loading="lazy">
+      </div>
+      <div class="work-card reveal" data-type="image" data-src="D4.jpg">
+        <img src="D4.jpg" alt="Work Sample" loading="lazy">
+      </div>
+      <div class="work-card reveal" data-type="image" data-src="DA5.jpg">
+        <img src="DA5.jpg" alt="Work Sample" loading="lazy">
+      </div>
+      <div class="work-card reveal" data-type="image" data-src="D6.png">
+        <img src="D6.png" alt="Work Sample" loading="lazy">
+      </div>
+      <div class="work-card reveal" data-type="image" data-src="PM.jpg">
+        <img src="PM.jpg" alt="Work Sample" loading="lazy">
+      </div>
+      <div class="work-card reveal" data-type="image" data-src="PM1.png">
+        <img src="PM1.png" alt="Work Sample" loading="lazy">
+      </div>
+      <div class="work-card reveal" data-type="image" data-src="digi2.jpg">
+        <img src="digi2.jpg" alt="Work Sample" loading="lazy">
+      </div>
+      <div class="work-card reveal" data-type="image" data-src="digi4.jpg">
+        <img src="digi4.jpg" alt="Work Sample" loading="lazy">
+      </div>
+      <div class="work-card reveal" data-type="image" data-src="digi6.jpg">
+        <img src="digi6.jpg" alt="Work Sample" loading="lazy">
+      </div>
+       <div class="work-card reveal" data-type="image" data-src="web.jpg">
+        <img src="web.jpg" alt="Work Sample" loading="lazy">
+      </div>
+       <div class="work-card reveal" data-type="image" data-src="proto.png">
+        <img src="proto.png" alt="Work Sample" loading="lazy">
+      </div>
+       <div class="work-card reveal" data-type="image" data-src="proto1.png">
+        <img src="proto1.png" alt="Work Sample" loading="lazy">
+      </div>
+      <!-- VIDEO CARDS -->
+      <div class="work-card reveal" data-type="video" data-src="ani.mp4">
+        <video src="ani.mp4" muted autoplay loop playsinline preload="auto"></video>
+        <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+      </div>
+      <div class="work-card reveal" data-type="video" data-src="KALUSUG PV.mp4">
+        <video src="KALUSUG PV.mp4" muted autoplay loop playsinline preload="auto"></video>
+        <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+      </div>
+      <div class="work-card reveal" data-type="video" data-src="BLISS.mp4">
+        <video src="BLISS.mp4" muted autoplay loop playsinline preload="auto"></video>
+        <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section class="section" id="contact">
+    <span class="section-label reveal">Get In Touch</span>
+    <h2 class="reveal">Contact Me</h2>
+    <div class="contact-container">
+      <div class="contact-info reveal">
+        <a href="tel:+639123011748" class="contact-info-item">
+          <i class="fas fa-phone"></i>
+          <div><strong>Phone</strong><br><span>09123011748</span></div>
+        </a>
+        <div class="contact-info-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <div><strong>Address</strong><br><span>Prk. Kasoy, Cagangohan, Panabo City, Davao del Norte</span></div>
+        </div>
+        <a href="mailto:lapasjorbert@gmail.com" class="contact-info-item">
+          <i class="fas fa-envelope"></i>
+          <div><strong>Email</strong><br><span>lapasjorbert@gmail.com</span></div>
+        </a>
+        <button class="download-resume-btn" id="downloadResumeBtn" title="Download Resume PDF">
+          <i class="fas fa-download"></i> Download My Resume
+        </button>
+      </div>
+      <form class="contact-form reveal" id="contactForm">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" placeholder="Your Message" required></textarea>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send Message</button>
+        <p class="form-success" id="formSuccess">✅ Message sent! Opening your email client...</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX MODAL -->
+  <div class="lightbox-overlay" id="lightboxOverlay">
+    <button class="lightbox-close" id="lightboxClose"><i class="fas fa-times"></i></button>
+    <div class="lightbox-content" id="lightboxContent"></div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>&copy; 2026 Jorbert L. Intendencia Portfolio</p>
+  </footer>
+
+  <!-- PDF & canva libraries (for resume download) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script>
+    // THEME TOGGLE
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      body.classList.add('light-mode');
+    }
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('light-mode');
+      const isLight = body.classList.contains('light-mode');
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+      document.documentElement.style.setProperty('--sparkle-color', isLight ? '#5390d9' : '#6fffe9');
+    });
+    document.documentElement.style.setProperty('--sparkle-color', body.classList.contains('light-mode') ? '#5390d9' : '#6fffe9');
+
+    // HAMBURGER MENU
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+    function closeMenu() {
+      hamburger.classList.remove('active');
+      navLinks.classList.remove('active');
+    }
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) closeMenu();
+    });
+
+    // CURSOR SPARKLE EFFECT
+    let sparkleThrottle = 0;
+    const sparkleInterval = 140;
+    const maxSparkles = 15;
+    document.addEventListener('mousemove', (e) => {
+      const now = Date.now();
+      if (now - sparkleThrottle < sparkleInterval) return;
+      sparkleThrottle = now;
+      const existingSparkles = document.querySelectorAll('.sparkle-particle');
+      if (existingSparkles.length >= maxSparkles) {
+        existingSparkles[0].remove();
+      }
+      const particle = document.createElement('span');
+      particle.classList.add('sparkle-particle');
+      const size = Math.random() * 4 + 2.5;
+      const sx = (Math.random() - 0.5) * 14;
+      const sy = (Math.random() - 0.5) * 14;
+      const ex = (Math.random() - 0.5) * 30;
+      const ey = (Math.random() - 0.5) * 30;
+      particle.style.cssText = `width: ${size}px; height: ${size}px; left: ${e.clientX}px; top: ${e.clientY}px; --sx: ${sx}px; --sy: ${sy}px; --ex: ${ex}px; --ey: ${ey}px;`;
+      document.body.appendChild(particle);
+      setTimeout(() => {
+        if (particle.parentNode) particle.remove();
+      }, 750);
+    });
+
+    // SCROLL REVEAL
+    const revealElements = document.querySelectorAll('.reveal, .timeline-item, .skills-category, .work-card');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+        else entry.target.classList.remove('visible');
+      });
+    }, { root: null, rootMargin: '0px 0px -60px 0px', threshold: 0.12 });
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // LIGHTBOX
+    const lightboxOverlay = document.getElementById('lightboxOverlay');
+    const lightboxContent = document.getElementById('lightboxContent');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const workCards = document.querySelectorAll('.work-card');
+    workCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const type = card.getAttribute('data-type');
+        const src = card.getAttribute('data-src');
+        lightboxContent.innerHTML = '';
+        if (type === 'image') {
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = 'Work Preview';
+          img.loading = 'lazy';
+          lightboxContent.appendChild(img);
+        } else if (type === 'video') {
+          const video = document.createElement('video');
+          video.src = src;
+          video.controls = true;
+          video.autoplay = true;
+          video.style.maxWidth = '90vw';
+          video.style.maxHeight = '85vh';
+          video.style.borderRadius = '16px';
+          lightboxContent.appendChild(video);
+        }
+        lightboxOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    function closeLightbox() {
+      lightboxOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+      const video = lightboxContent.querySelector('video');
+      if (video) {
+        video.pause();
+        video.src = '';
+      }
+      lightboxContent.innerHTML = '';
+    }
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxOverlay.addEventListener('click', (e) => {
+      if (e.target === lightboxOverlay) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightboxOverlay.classList.contains('active')) closeLightbox();
+    });
+
+    // DOWNLOAD RESUME AS PDF (using jsPDF + html2canvas)
+    document.getElementById('downloadResumeBtn').addEventListener('click', () => {
+      const { jsPDF } = window.jspdf;
+      const resumeHTML = `
+        <div style="font-family:'Segoe UI',sans-serif; max-width:800px; margin:40px auto; padding:40px; color:#1a202c; background:#fff;">
+          <h1 style="color:#0b132b; border-bottom:3px solid #5390d9; padding-bottom:10px;">Jorbert L. Intendencia</h1>
+          <p style="color:#4a5568; margin:5px 0;">📧 lapasjorbert@gmail.com | 📱 09123011748</p>
+          <p style="color:#4a5568; margin:0;">📍 Prk. Kasoy, Cagangohan, Panabo City, Davao del Norte</p>
+          <h2 style="color:#5390d9; margin-top:25px;">Professional Summary</h2>
+          <p>Passionate Graphic Designer &amp; Illustrator with expertise in branding, UI/UX design, illustration, and video editing.</p>
+          <h2 style="color:#5390d9;">Education</h2>
+          <ul>
+            <li><strong>BS Information Technology</strong> – Davao del Norte State College (2022–Present)</li>
+            <li><strong>Senior High – Arts and Design</strong> – Panabo City National High School (2020–2022)</li>
+            <li><strong>Junior High</strong> – Panabo City National High School (2016–2020)</li>
+          </ul>
+          <h2 style="color:#5390d9;">Skills</h2>
+          <ul>
+            <li>Graphic Design, Illustration, Logo Design</li>
+            <li>UI/UX Design, Animation, Video Editing</li>
+            <li>Tools: Photoshop, IbispaintX, Canva, Figma, VScode, Capcut, Flip a Clip</li>
+          </ul>
+        </div>
+      `;
+
+      const container = document.createElement('div');
+      container.innerHTML = resumeHTML;
+      container.style.position = 'absolute';
+      container.style.left = '-9999px';
+      container.style.width = '800px';
+      container.style.background = '#ffffff';
+      document.body.appendChild(container);
+
+      html2canvas(container, { scale: 2, useCORS: true }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        const imgWidth = pdfWidth;
+        const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+
+        let heightLeft = imgHeight;
+        let position = 0;
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pdfHeight;
+
+        while (heightLeft > 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pdfHeight;
+        }
+
+        pdf.save('Jorbert_Intendencia_Resume.pdf');
+        document.body.removeChild(container);
+      }).catch(() => {
+        // Fallback if html2canvas fails: just download the HTML as before
+        const blob = new Blob([resumeHTML], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Jorbert_Intendencia_Resume.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        document.body.removeChild(container);
+      });
+    });
+
+    // CONTACT FORM – opens email client with pre-filled details
+    const contactForm = document.getElementById('contactForm');
+    const formSuccess = document.getElementById('formSuccess');
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = encodeURIComponent(contactForm.querySelector('input[name="name"]').value.trim());
+      const email = encodeURIComponent(contactForm.querySelector('input[name="email"]').value.trim());
+      const message = encodeURIComponent(contactForm.querySelector('textarea[name="message"]').value.trim());
+      const subject = encodeURIComponent('New Portfolio Message from ' + (name || 'Visitor'));
+      const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0AMessage: ${message}`;
+      const mailtoLink = `mailto:lapasjorbert@gmail.com?subject=${subject}&body=${body}`;
+      
+      formSuccess.classList.add('show');
+      setTimeout(() => formSuccess.classList.remove('show'), 4000);
+      window.location.href = mailtoLink;
+    });
+
+    // NAVBAR SHADOW ON SCROLL
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').style.boxShadow = window.scrollY > 30 ? '0 4px 25px rgba(0,0,0,0.25)' : 'none';
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', closeMenu));
+    console.log('✨ Portfolio ready!');
+  </script>
+</body>
+</html>
